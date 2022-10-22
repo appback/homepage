@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<link rel="stylesheet" type="text/css" href="css/coin-flipping.css" />
+		<script type="text/javascript" src="scripts/coin-flipping.js"></script>
+	</head>
+	<body>
+		<button class="btn-nav">
+			<div class="bar arrow-top-r"></div>
+			<div class="bar arrow-middle-r"></div>
+			<div class="bar arrow-bottom-r"></div>
+		</button>
+		<div class="links-con">
+			<a href="https://codepen.io/tonkec/full/zbRKKK" target="_blank" class="nav new">NEW VERSION</a>
+			<a href="coin-flipping.html" class="nav">COIN FLIPPING</a>
+			<a href="https://antonijasimic.bitbucket.io/text_hover_effects/documentation.html" target="_blank" class="nav">Docs</a>
+			<a href="https://github.com/tonkec/text_hover_effects" class="nav" target="_blank">Download</a>
+		</div>
+		<div class="wrapper">
+			<!-- Instruction to flip a coin -->
+			<h1 class="msg">Flip the Coin</h1>
+			<div class="coin-container">
+				<!-- Div for the coin -->
+				<div id="coin">
+					<div class="coin-side heads">Go</div>
+					<div class="coin-side tails">Stop</div>
+				</div>
+			</div>
+			<div class="text-center">
+				<!-- Button that simulates a coin flip -->
+				<button class="custom-btn btn-5" onclick="flip()">Flip Coin</button>
+			</div>
+		</div>
+
+		<div id="disqus_thread"></div>
+		<script>
+			/**
+			 *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+			 *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables    */
+			/*
+    var disqus_config = function () {
+    this.page.url = PAGE_URL;  // Replace PAGE_URL with your page's canonical URL variable
+    this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+    };
+    */
+			(function () {
+				// DON'T EDIT BELOW THIS LINE
+				var d = document,
+					s = d.createElement('script');
+				s.src = 'https://fate-decision.disqus.com/embed.js';
+				s.setAttribute('data-timestamp', +new Date());
+				(d.head || d.body).appendChild(s);
+			})();
+		</script>
+		<noscript
+			>Please enable JavaScript to view the
+			<a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript
+		>
+	</body>
+</html>
+
+<!-- license 
+ -->
