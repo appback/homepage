@@ -4,6 +4,9 @@ var coin = document.getElementById('coin');
 var heads = 'is-heads';
 var tails = 'is-tails';
 var flipping = 'is-flipping';
+var waitTime = 5000;
+
+var isFipping = false;
 
 window.onload = function () {
 	coin = document.getElementById('coin');
@@ -11,11 +14,18 @@ window.onload = function () {
 
 //Function that simulates the coin flip
 function flip() {
-	// Increment the total count of flips
-	coin.setAttribute('class', flipping);
-	//Display message while coin is flipping
-	document.getElementsByClassName('msg')[0].innerHTML = '저도 <span>고민</span>이 되는 문제네요...';
-	setTimeout(result, flipTime);
+	if (isFipping == true) {
+		alert('아직 준비중이에요.');
+	} else {
+		isFipping = true;
+		// Increment the total count of flips
+		coin.setAttribute('class', flipping);
+		//Display message while coin is flipping
+		document.getElementsByClassName('msg')[0].innerHTML =
+			'저도 <span>고민</span>이 되는 문제네요...';
+		setTimeout(result, flipTime);
+		setTimeout(endDelay, waitTime);
+	}
 }
 
 function result() {
@@ -35,10 +45,16 @@ function result() {
 	} else if (res > 0.05) {
 		coin.setAttribute('class', heads);
 		//  Display the coin landed on tails
-		document.getElementsByClassName('msg')[0].innerHTML = '<span>반드시 진행</span>하세요 꼭이요!';
+		document.getElementsByClassName('msg')[0].innerHTML =
+			'<span>반드시 진행</span>하세요 꼭이요!';
 	} else {
 		coin.setAttribute('class', tails);
 		//  Display the coin landed on tails
-		document.getElementsByClassName('msg')[0].innerHTML = '<span>절대 안돼요</span> 다시 생각해 보세요.';
+		document.getElementsByClassName('msg')[0].innerHTML =
+			'<span>절대 안돼요</span> 다시 생각해 보세요.';
 	}
+}
+
+function endDelay() {
+	isFipping = false;
 }
