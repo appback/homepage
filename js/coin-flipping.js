@@ -14,7 +14,7 @@ function flip() {
 	// Increment the total count of flips
 	coin.setAttribute('class', flipping);
 	//Display message while coin is flipping
-	document.getElementsByClassName('msg')[0].innerHTML = '저도 고민이 되는 문제네요...';
+	document.getElementsByClassName('msg')[0].innerHTML = '저도 <span>고민</span>이 되는 문제네요...';
 	setTimeout(result, flipTime);
 }
 
