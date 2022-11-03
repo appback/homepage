@@ -11,8 +11,19 @@
 			crossorigin="anonymous"
 		/>
 		<script src="js/coin-flipping.js"></script>
+		<title>COIN FLIPPING</title>
 	</head>
 	<body>
+		<!-- Google Tag Manager (noscript) -->
+		<noscript
+			><iframe
+				src="https://www.googletagmanager.com/ns.html?id=GTM-WKSNSL3"
+				height="0"
+				width="0"
+				style="display: none; visibility: hidden;"
+			></iframe
+		></noscript>
+		<!-- End Google Tag Manager (noscript) -->
 		<nav class="navbar navbar-expand-lg bg-light">
 			<div class="container-fluid">
 				<a class="navbar-brand" href="https://appback.netlify.app/">APPBACK</a>
@@ -32,8 +43,8 @@
 						<li class="nav-item">
 							<a class="nav-link active" href="coin-flipping.html">COIN FLIPPING</a>
 						</li>
-						<li><a class="nav-link active" href="#">EMPTY</a></li>
-						<li><a class="nav-link active" href="#">EMPTY</a></li>
+						<li><a class="nav-link active" href="animal-face.html">ANIMAL FACE</a></li>
+						<li><a class="nav-link active" href="bowling-score-calculator.html">BOWLING</a></li>
 					</ul>
 				</div>
 			</div>
@@ -43,7 +54,7 @@
 			<!-- Instruction to flip a coin -->
 			<h1 class="msg">제가 <span>결정</span>해 드리겠습니다.</h1>
 			<div class="coin-container">
-				<button onclick="flip()">
+				<button class="avatar-preview" onclick="flip()">
 					<!-- Div for the coin -->
 					<div id="coin">
 						<div class="coin-side heads">가즈아</div>
@@ -71,15 +82,6 @@
 		<h1 class="py-3 msg">당신의 경험을 공유해주세요.</h1>
 		<div id="disqus_thread"></div>
 		<script>
-			/**
-			 *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
-			 *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables    */
-			/*
-    var disqus_config = function () {
-    this.page.url = PAGE_URL;  // Replace PAGE_URL with your page's canonical URL variable
-    this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
-    };
-    */
 			(function () {
 				// DON'T EDIT BELOW THIS LINE
 				var d = document,
@@ -107,4 +109,5 @@
 </html>
 
 <!-- license 
+Copyright (c) 2022 by jude (https://codepen.io/judejang/pen/qKEwzJ)
  -->

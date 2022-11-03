@@ -1,0 +1,105 @@
+.buttons {
+	width: 500px;	
+	height : 44px;
+}
+
+.hitbutton {
+	margin: 3px;
+}
+
+.framebox-body {
+	width: 8.18%;
+	height: 100%;
+	border: solid thin Black;
+	padding: 0;
+	background : whitesmoke;
+}
+
+#selected {
+	background : Khaki;
+}
+
+
+.framebox-body.last {
+	width: 10%;
+}
+
+.framename {
+	height: 25%;
+	width: 100%;
+	margin: 0pt 0pt 0pt 0pt;
+	background-color: #bbbb9d;
+	text-align: center;
+	font-size: 80%;
+	padding-top: 3px;
+}
+
+.outerbox {
+	box-sizing: border-box;
+	width: 100%;
+	height: 40%;
+	margin: 0pt 0pt 0pt 0pt;
+	float: left;
+}
+
+.Strikebox {
+	width: 50%;
+	height: 100%;
+	border-left: solid thin Black;
+	border-bottom: solid thin Black;
+	float: right;
+}
+
+.strikebox.last {
+	width: 33.33%;
+	float: left;
+}
+
+.strikebox.last.first {
+	border-left:none
+}
+
+.ball1box {
+	box-sizing: border-box;
+	width: 50%;
+	height: 100%;
+	padding-top: 6px;
+	margin: 0;
+	float: left;
+}
+.framescorebox {
+	box-sizing: border-box;
+	width: 100%;
+	height: 75%;
+	margin: 0;
+	border-top: 1px #000 solid;
+	padding-top: 36px;
+	text-align: center;
+}
+
+.panel-body {
+	padding: 0px;
+	height: 110px;
+	margin: 2px;
+}
+
+.col-md-9 {
+	padding-left: 15px;
+}
+
+.gamehidden {
+	display: none;
+}
+
+.frameFontSize {
+	font-size:  1rem;
+	text-align: center;
+}
+.frameScoreFontSize {
+	font-size: 1rem;
+	text-align: center;
+}
+
+.container {
+	width: 100%;
+}

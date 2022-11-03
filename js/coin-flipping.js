@@ -4,7 +4,7 @@ var coin = document.getElementById('coin');
 var heads = 'is-heads';
 var tails = 'is-tails';
 var flipping = 'is-flipping';
-var waitTime = 5000;
+var waitTime = 10000;
 
 var isFipping = false;
 
@@ -30,7 +30,7 @@ function flip() {
 
 function result() {
 	coin.removeAttribute('class', flipping);
-
+	previewImage();
 	//Randomising result for heads and tails
 	var res = Math.random();
 	//1 for heads 4 for tails
@@ -42,7 +42,7 @@ function result() {
 		coin.setAttribute('class', tails);
 		//Increment the total tails count
 		document.getElementsByClassName('msg')[0].innerHTML = '<span>보류</span>해야 할듯 하네요.';
-	} else if (res > 0.05) {
+	} else if (res > 0.005) {
 		coin.setAttribute('class', heads);
 		//  Display the coin landed on tails
 		document.getElementsByClassName('msg')[0].innerHTML =
