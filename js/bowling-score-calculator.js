@@ -8,24 +8,32 @@ var scorecasrdFrameScore;
 var btn_frames;
 var scorecasrdHitScoreElement;
 var scorecasrdFrameScoreElement;
+var parameters = [];
 
 window.onload = function () {
 	isCreating = false;
 	scorecasrdHitScoreElement = [];
-	scorecasrdFrameScoreElement = create2DArray(0,0);
-	btn_frames = create2DArray(0,0);
-	scorecasrdFrameScore = create2DArray(0,0);
+	scorecasrdFrameScoreElement = create2DArray(0, 0);
+	btn_frames = create2DArray(0, 0);
+	scorecasrdFrameScore = create2DArray(0, 0);
 	create_buttons();
 	create_scorecard();
-}
+};
 
 function addScoreCard() {
 	btn_frames[selectGameIndex][selectFrameIndex].setAttribute('id', '');
 	create_scorecard();
 }
 
-function pictureToaddScoreCard() {
-	
+function onclick_pictureInput(event) {
+	let myInput = document.getElementById(event.currentTarget.value);
+	myInput.click();
+}
+
+function input_changed(event) {
+	let index = event.target.id.replace('input_', '');
+	alert(parameters[index]['img']);
+	parameters[index]['img'].src = URL.createObjectURL(event.target.files[0]);
 }
 
 function delScoreCard() {
@@ -42,17 +50,17 @@ function delScoreCard() {
 		let removeTarget = scorecards.pop();
 		removeTarget.remove();
 	}
-		
 }
 
 function create_scorecard() {
 	if (isCreating) {
-			alert('작성중인 프레임을 완료해 주십시오.');
+		alert('작성중인 프레임을 완료해 주십시오.');
 	} else {
 		selectGameIndex = scorecards.length;
+		parameters.push({});
 		let tagArea = document.getElementById('tagArea');
-		let scorecard = document.createElement('container');
-		scorecard.setAttribute('class', 'scorecard');
+		let scorecard = document.createElement('div');
+		scorecard.setAttribute('class', 'scorecard container');
 		tagArea.appendChild(scorecard);
 		scorecards.push(scorecard);
 		let panel = document.createElement('div');
@@ -62,6 +70,23 @@ function create_scorecard() {
 		scorecasrdFrameScore.push(new Array(0));
 		scorecasrdFrameScoreElement.push(new Array(0));
 		scorecasrdHitScoreElement.push(new Array(0));
+
+		let value = 'input_' + selectGameIndex;
+		let body = createElement('button', 'framebox-body');
+		body.setAttribute('value', value);
+		body.addEventListener('click', onclick_pictureInput);
+		panel.appendChild(body);
+		let outerbox = createElement('div', 'outerbox', null, body);
+		let inputElement = create_input(value, 'file', 'image/*');
+		inputElement.addEventListener('change', input_changed);
+		outerbox.appendChild(inputElement);
+		let imageElement = document.createElement('img');
+		imageElement.setAttribute('class', 'otherBox');
+		imageElement.setAttribute('src', '');
+		parameters[selectGameIndex]['img'] = imageElement;
+		parameters[selectGameIndex]['input'] = inputElement;
+		body.appendChild(imageElement);
+
 		for (let i = 0; i < 9; i++) {
 			create_defalutFrame(panel, i);
 		}
@@ -74,9 +99,7 @@ function create_scorecard() {
 }
 
 function create_lastFrame(panel) {
-	let body = create_frameBody(panel, 'framebox-body last', '9');
-	let framename = createElement('div', 'framename', null, body);
-	addTextElementText(framename, '10');
+	let body = create_buttonframeBody(panel, 'framebox-body last column', '9');
 	let outerbox = createElement('div', 'outerbox', null, body);
 	let strikebox1 = createElement('div', 'strikebox last first', null, outerbox);
 	addTextElement(strikebox1, scorecasrdHitScoreElement[selectGameIndex]);
@@ -87,27 +110,20 @@ function create_lastFrame(panel) {
 	let framescorebox = createElement('div', 'framescorebox', null, body);
 	addTextElement(framescorebox, scorecasrdFrameScoreElement[selectGameIndex]);
 
-	let scorebody = create_frameBody(panel, 'framebox-body', null);
-	let scoretitle = createElement('div', 'framename', null, scorebody);
-	addTextElementText(scoretitle, 'Score');
+	let scorebody = create_frameBody(panel, 'framebox-body', 'Score', 'button');
 	let totalscorebox = createElement('div', 'framescorebox', null, scorebody);
 	addTextElement(
 		totalscorebox,
 		scorecasrdFrameScoreElement[selectGameIndex],
 		'frameScoreFontSize'
 	);
-
-	let maxscorebody = create_frameBody(panel, 'framebox-body', null);
-	let maxscoretitle = createElement('div', 'framename', null, maxscorebody);
-	addTextElementText(maxscoretitle, 'Max Score');
+	let maxscorebody = create_frameBody(panel, 'framebox-body', 'Max Score', 'button');
 	let maxscorebox = createElement('div', 'framescorebox', null, maxscorebody);
 	addTextElement(maxscorebox, scorecasrdFrameScoreElement[selectGameIndex], 'frameScoreFontSize');
 }
 
 function create_defalutFrame(panel, i) {
-	let body = create_frameBody(panel, 'framebox-body', i.toString());
-	let framename = createElement('div', 'framename', null, body);
-	addTextElementText(framename, i + 1);
+	let body = create_buttonframeBody(panel, 'framebox-body column', i.toString());
 	let outerbox = createElement('div', 'outerbox', null, body);
 	let ball1box = createElement('div', 'ballbox', null, outerbox);
 	addTextElement(ball1box, scorecasrdHitScoreElement[selectGameIndex]);
@@ -115,6 +131,7 @@ function create_defalutFrame(panel, i) {
 	addTextElement(strikebox, scorecasrdHitScoreElement[selectGameIndex]);
 	let framescorebox = createElement('div', 'framescorebox', null, body);
 	addTextElement(framescorebox, scorecasrdFrameScoreElement[selectGameIndex]);
+	body.style.display = 'inline';
 }
 
 function onclick_framebody(event) {
@@ -130,7 +147,7 @@ function onclick_framebody(event) {
 			} else {
 				try {
 					btn_frames[selectGameIndex][selectFrameIndex].setAttribute('id', '');
-				} catch {}	
+				} catch {}
 				selectGameIndex = gameIndex;
 				selectFrameIndex = frameIndex;
 				btn_frames[gameIndex][frameIndex].setAttribute('id', 'selected');
@@ -257,7 +274,7 @@ function onclick_scorehit(event) {
 
 	if (scores.length < 21) {
 		let maxscore = scores.slice();
-		if (i => 18 && maxscore.length % 2 == 1) {
+		if ((i) => 18 && maxscore.length % 2 == 1) {
 			maxscore.push(10 - maxscore[maxscore.length - 1]);
 		}
 		for (let i = maxscore.length; i < 21; i++) {
@@ -297,14 +314,31 @@ function onclick_scorehit(event) {
 	}
 }
 
-function create_frameBody(parentElement, classValue, value, type = 'button') {
-	let body = createElement(type, classValue, selectGameIndex + '_'+ value);
-	body.addEventListener('click', onclick_framebody);
-	btn_frames[selectGameIndex].push(body);
-	parentElement.appendChild(body);
+function create_input(id, type, accept, ishidden = true) {
+	let e = document.createElement('input');
+	e.setAttribute('id', id);
+	e.setAttribute('type', type);
+	e.setAttribute('accept', accept);
+	if (ishidden == true) {
+		e.style.visibility = 'hidden';
+	}
+	return e;
+}
+
+function create_buttonframeBody(parentElement, classValue, value) {
+	let e = create_frameBody(parentElement, classValue, Number(value) + 1, 'button');
+	e.setAttribute('value', selectGameIndex + '_' + value);
+	e.addEventListener('click', onclick_framebody);
+	btn_frames[selectGameIndex].push(e);
+	return e;
+}
+
+function create_frameBody(parentElement, classValue, value, type) {
+	let e = createElement(type, classValue, null, parentElement);
 	let framename = createElement('div', 'framename');
-	body.appendChild(framename);
-	return body;
+	e.appendChild(framename);
+	addTextElementText(framename, value);
+	return e;
 }
 
 function createElement(type, classValue, value = null, parentElement = null) {
@@ -439,4 +473,8 @@ function create2DArray(rows, columns) {
 		arr[i] = new Array(columns);
 	}
 	return arr;
+}
+
+async function init() {
+	model = await tmImage.load(modelURL, metadataURL);
 }
