@@ -82,18 +82,36 @@
 			</div>
 		</div>
 		<!-- Footer -->
-		<footer class="py-5 mt-auto">
-			<div class="text-center fixed-bottom">
-				<script src="https://ads-partners.coupang.com/g.js"></script>
-				<script>
-					new PartnersCoupang.G({
-						id: 613176,
-						template: 'carousel',
-						trackingCode: 'AF6060725',
-						width: '640',
-						height: '100',
-					});
-				</script>
+		<footer class="py-5 mt-auto fixed-bottom">
+			<div class="d-flex justify-content-center flex-column">
+				<div class="d-flex flex-column">
+					<div class="d-flex justify-content-center">
+						<script src="https://ads-partners.coupang.com/g.js"></script>
+						<script>
+							new PartnersCoupang.G({
+								id: 613176,
+								template: 'carousel',
+								trackingCode: 'AF6060725',
+								width: '640',
+								height: '100',
+							});
+						</script>
+					</div>
+					<div class="d-flex justify-content-center">
+						<ins
+							class="kakao_ad_area p-2"
+							style="display: none;"
+							data-ad-unit="DAN-OGJklMyiyWu2RL5T"
+							data-ad-width="320"
+							data-ad-height="100"
+						></ins>
+						<script
+							type="text/javascript"
+							src="//t1.daumcdn.net/kas/static/ba.min.js"
+							async
+						></script>
+					</div>
+				</div>
 			</div>
 		</footer>
 		<noscript
@@ -110,5 +128,24 @@
 			type="text/javascript"
 			src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-63564d484528da0e"
 		></script>
+		<script async src="http://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+		<script type="text/javascript">
+			function callBackFunc(arg1) {
+				/*
+				 * TODO: 기능 구현
+				 */
+			}
+		</script>
+		<!-- <script type="text/javascript">
+			function callBackFunc(elm) {  
+				text = [];  
+				text.push('<ins class="adsbygoogle"');  
+				text.push('style="display:inline-block;width:250px;height:250px"');  
+				text.push('data-ad-client="ca-pub-7893835816116192"');  
+				text.push('data-ad-slot="5918517081"></ins>');  
+				elm.innerHTML = text.join(' ');  
+				(adsbygoogle = window.adsbygoogle || []).push({});  
+			}  
+		</script> -->
 	</body>
 </html>

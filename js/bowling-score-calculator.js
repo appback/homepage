@@ -60,7 +60,7 @@ function create_scorecard() {
 		parameters.push({});
 		let tagArea = document.getElementById('tagArea');
 		let scorecard = document.createElement('div');
-		scorecard.setAttribute('class', 'scorecard container');
+		scorecard.setAttribute('class', 'scorecard');
 		tagArea.appendChild(scorecard);
 		scorecards.push(scorecard);
 		let panel = document.createElement('div');
