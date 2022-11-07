@@ -29,8 +29,8 @@ function flip() {
 }
 
 function result() {
-	coin.removeAttribute('class', flipping);
-	previewImage();
+	// coin.removeAttribute('class', flipping);
+	// previewImage();
 	//Randomising result for heads and tails
 	var res = Math.random();
 	//1 for heads 4 for tails
