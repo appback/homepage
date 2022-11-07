@@ -1,6 +1,19 @@
+.wrapper {
+	margin: 50px auto;
+	padding: 32px 10px;
+	text-align:center;
+}
+
+.scorecard {
+	margin: 10px auto;
+	padding: 10px 10px;
+	max-width: 1600px;
+	height: 500px;
+	text-align:center;
+}
+
 .buttons {
-	width: 500px;	
-	height : 44px;
+	width : 100%
 }
 
 .hitbutton {
@@ -13,69 +26,67 @@
 	border: solid thin Black;
 	padding: 0;
 	background : whitesmoke;
+	position: relative;
 }
-
-#selected {
-	background : Khaki;
-}
-
 
 .framebox-body.last {
 	width: 10%;
 }
 
 .framename {
-	height: 25%;
+	position: absolute;
+	top : 0px;
+	height: 20%;
 	width: 100%;
-	margin: 0pt 0pt 0pt 0pt;
 	background-color: #bbbb9d;
-	text-align: center;
-	font-size: 80%;
-	padding-top: 3px;
+	border-bottom : solid thin Black;
 }
 
 .outerbox {
-	box-sizing: border-box;
+	position: absolute;
+	top: 20%;
 	width: 100%;
 	height: 40%;
-	margin: 0pt 0pt 0pt 0pt;
-	float: left;
 }
 
-.Strikebox {
+.framescorebox {
+	position: absolute;
+	top: 60%;
+	width: 100%;
+	height: 40%;
+}
+
+.ballbox {
+	position: absolute;
+	left : 0px;
 	width: 50%;
 	height: 100%;
-	border-left: solid thin Black;
-	border-bottom: solid thin Black;
-	float: right;
+}
+
+.strikebox {
+	position: absolute;
+	left : 50%;
+	width: 50%;
+	height: 100%;
+	border-left : solid thin Black;
+	border-bottom : solid thin Black;
 }
 
 .strikebox.last {
 	width: 33.33%;
 	float: left;
+	left : 66.66%;
 }
 
 .strikebox.last.first {
-	border-left:none
+	border-left:none;
+	left : 0px;
 }
 
-.ball1box {
-	box-sizing: border-box;
-	width: 50%;
-	height: 100%;
-	padding-top: 6px;
-	margin: 0;
-	float: left;
+.strikebox.last.second {
+	left : 33.33%;
 }
-.framescorebox {
-	box-sizing: border-box;
-	width: 100%;
-	height: 75%;
-	margin: 0;
-	border-top: 1px #000 solid;
-	padding-top: 36px;
-	text-align: center;
-}
+
 
 .panel-body {
 	padding: 0px;
@@ -83,23 +94,12 @@
 	margin: 2px;
 }
 
-.col-md-9 {
-	padding-left: 15px;
-}
-
-.gamehidden {
-	display: none;
-}
-
-.frameFontSize {
-	font-size:  1rem;
-	text-align: center;
-}
 .frameScoreFontSize {
 	font-size: 1rem;
 	text-align: center;
+	height: 100%;
 }
 
-.container {
-	width: 100%;
+#selected {
+	background : Khaki;
 }

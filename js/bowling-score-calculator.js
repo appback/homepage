@@ -4,158 +4,331 @@ var isCreating;
 
 var hits = [];
 var scorecards = [];
-var scorecasrdHitScore = [];
-var scorecasrdFrameScore = [];
-var scores = [];
-var frames = [];
-var btn_frames = [];
+var scorecasrdFrameScore;
+var btn_frames;
+var scorecasrdHitScoreElement;
+var scorecasrdFrameScoreElement;
 
 window.onload = function () {
-	create_buttons();
-
-	scorecasrdHitScoreElement = [];
-	scorecasrdFrameScoreElement = [];
-	btn_frames = [];
-	let tagArea = document.getElementById('tagArea');
-
-	let scorecard = document.createElement('div');
-	scorecard.setAttribute('class', 'row');
-	tagArea.appendChild(scorecard);
-	scorecards.push(scorecard);
-
-	let col = document.createElement('div');
-	col.setAttribute('class', 'col-md-9');
-	scorecard.appendChild(col);
-
-	let panel = document.createElement('div');
-	panel.setAttribute('class', 'panel panel-body');
-	col.appendChild(panel);
-
-	for (let i = 0; i < 9; i++) {
-		create_defalutFrame(panel, i);
-	}
-	create_lastFrame(panel);
-	btn_frames[0].setAttribute('id', 'selected');
-	selectGameIndex = 0;
-	selectFrameIndex = 0;
-	//scores = new Array(21).fill(0);
-	scores = [];
 	isCreating = false;
-};
+	scorecasrdHitScoreElement = [];
+	scorecasrdFrameScoreElement = create2DArray(0,0);
+	btn_frames = create2DArray(0,0);
+	scorecasrdFrameScore = create2DArray(0,0);
+	create_buttons();
+	create_scorecard();
+}
 
-function create_game() {}
+function addScoreCard() {
+	btn_frames[selectGameIndex][selectFrameIndex].setAttribute('id', '');
+	create_scorecard();
+}
+
+function pictureToaddScoreCard() {
+	
+}
+
+function delScoreCard() {
+	if (scorecards.length > 1) {
+		if (selectGameIndex == scorecards.length - 1) {
+			selectGameIndex -= 1;
+			selectFrameIndex = 0;
+			btn_frames[selectGameIndex][0].setAttribute('id', 'selected');
+		}
+		btn_frames.pop();
+		scorecasrdFrameScore.pop();
+		scorecasrdFrameScoreElement.pop();
+		scorecasrdHitScoreElement.pop();
+		let removeTarget = scorecards.pop();
+		removeTarget.remove();
+	}
+		
+}
+
+function create_scorecard() {
+	if (isCreating) {
+			alert('작성중인 프레임을 완료해 주십시오.');
+	} else {
+		selectGameIndex = scorecards.length;
+		let tagArea = document.getElementById('tagArea');
+		let scorecard = document.createElement('container');
+		scorecard.setAttribute('class', 'scorecard');
+		tagArea.appendChild(scorecard);
+		scorecards.push(scorecard);
+		let panel = document.createElement('div');
+		panel.setAttribute('class', 'panel-body');
+		scorecard.appendChild(panel);
+		btn_frames.push(new Array(0));
+		scorecasrdFrameScore.push(new Array(0));
+		scorecasrdFrameScoreElement.push(new Array(0));
+		scorecasrdHitScoreElement.push(new Array(0));
+		for (let i = 0; i < 9; i++) {
+			create_defalutFrame(panel, i);
+		}
+		create_lastFrame(panel);
+		btn_frames[selectGameIndex][0].setAttribute('id', 'selected');
+		selectFrameIndex = 0;
+		scorecasrdFrameScoreElement[selectGameIndex][10].innerHTML = 0;
+		scorecasrdFrameScoreElement[selectGameIndex][11].innerHTML = 300;
+	}
+}
 
 function create_lastFrame(panel) {
-	let frameboxbody = document.createElement('button');
-	frameboxbody.setAttribute('class', 'framebox-body last');
-	frameboxbody.setAttribute('value', '9');
-	frameboxbody.addEventListener('click', onclick_framebody);
-	btn_frames.push(frameboxbody);
-	panel.appendChild(frameboxbody);
+	let body = create_frameBody(panel, 'framebox-body last', '9');
+	let framename = createElement('div', 'framename', null, body);
+	addTextElementText(framename, '10');
+	let outerbox = createElement('div', 'outerbox', null, body);
+	let strikebox1 = createElement('div', 'strikebox last first', null, outerbox);
+	addTextElement(strikebox1, scorecasrdHitScoreElement[selectGameIndex]);
+	let strikebox2 = createElement('div', 'strikebox last second', null, outerbox);
+	addTextElement(strikebox2, scorecasrdHitScoreElement[selectGameIndex]);
+	let strikebox3 = createElement('div', 'strikebox last', null, outerbox);
+	addTextElement(strikebox3, scorecasrdHitScoreElement[selectGameIndex]);
+	let framescorebox = createElement('div', 'framescorebox', null, body);
+	addTextElement(framescorebox, scorecasrdFrameScoreElement[selectGameIndex]);
 
-	let framename = document.createElement('div');
-	framename.setAttribute('class', 'framename frameFontSize');
-	framename.innerHTML = '10';
-	frameboxbody.appendChild(framename);
+	let scorebody = create_frameBody(panel, 'framebox-body', null);
+	let scoretitle = createElement('div', 'framename', null, scorebody);
+	addTextElementText(scoretitle, 'Score');
+	let totalscorebox = createElement('div', 'framescorebox', null, scorebody);
+	addTextElement(
+		totalscorebox,
+		scorecasrdFrameScoreElement[selectGameIndex],
+		'frameScoreFontSize'
+	);
 
-	let outerbox = document.createElement('div');
-	outerbox.setAttribute('class', 'outerbox frameScoreFontSize');
-	frameboxbody.appendChild(outerbox);
-
-	let strikebox1 = document.createElement('div');
-	strikebox1.setAttribute('class', 'strikebox last first frameScoreFontSize');
-	outerbox.appendChild(strikebox1);
-	scorecasrdHitScoreElement.push(strikebox1);
-	let strikebox2 = document.createElement('div');
-	strikebox2.setAttribute('class', 'strikebox last frameScoreFontSize');
-	outerbox.appendChild(strikebox2);
-	scorecasrdHitScoreElement.push(strikebox2);
-	let strikebox3 = document.createElement('div');
-	strikebox3.setAttribute('class', 'strikebox last frameScoreFontSize');
-	outerbox.appendChild(strikebox3);
-	scorecasrdHitScoreElement.push(strikebox3);
-
-	let framescorebox = document.createElement('div');
-	framescorebox.setAttribute('class', 'framescorebox frameScoreFontSize');
-	frameboxbody.appendChild(framescorebox);
-	scorecasrdFrameScoreElement.push(framescorebox);
-
-	frameboxbody = document.createElement('button');
-	frameboxbody.setAttribute('class', 'framebox-body');
-	panel.appendChild(frameboxbody);
-
-	framename = document.createElement('div');
-	framename.setAttribute('class', 'framename frameFontSize');
-	framename.innerHTML = 'Score';
-	frameboxbody.appendChild(framename);
-
-	framescorebox = document.createElement('div');
-	framescorebox.setAttribute('class', 'framescorebox frameScoreFontSize');
-	frameboxbody.appendChild(framescorebox);
-	scorecasrdFrameScoreElement.push(framescorebox);
-	frameboxbody = document.createElement('button');
-	frameboxbody.setAttribute('class', 'framebox-body');
-	panel.appendChild(frameboxbody);
-
-	framename = document.createElement('div');
-	framename.setAttribute('class', 'framename frameFontSize');
-	framename.innerHTML = 'Max Score';
-	frameboxbody.appendChild(framename);
-
-	framescorebox = document.createElement('div');
-	framescorebox.setAttribute('class', 'framescorebox frameScoreFontSizer');
-	frameboxbody.appendChild(framescorebox);
-	scorecasrdFrameScoreElement.push(framescorebox);
+	let maxscorebody = create_frameBody(panel, 'framebox-body', null);
+	let maxscoretitle = createElement('div', 'framename', null, maxscorebody);
+	addTextElementText(maxscoretitle, 'Max Score');
+	let maxscorebox = createElement('div', 'framescorebox', null, maxscorebody);
+	addTextElement(maxscorebox, scorecasrdFrameScoreElement[selectGameIndex], 'frameScoreFontSize');
 }
 
 function create_defalutFrame(panel, i) {
-	let frameboxbody = document.createElement('button');
-	frameboxbody.setAttribute('class', 'framebox-body');
-	frameboxbody.setAttribute('value', i.toString());
-	frameboxbody.addEventListener('click', onclick_framebody);
-	btn_frames.push(frameboxbody);
-	panel.appendChild(frameboxbody);
-
-	let framename = document.createElement('div');
-	framename.setAttribute('class', 'framename frameFontSize');
-	framename.innerHTML = (i + 1).toString();
-	frameboxbody.appendChild(framename);
-
-	let outerbox = document.createElement('div');
-	outerbox.setAttribute('class', 'outerbox frameScoreFontSize');
-	frameboxbody.appendChild(outerbox);
-
-	let ball1box = document.createElement('div');
-	ball1box.setAttribute('class', 'ball1box frameScoreFontSize');
-	outerbox.appendChild(ball1box);
-	scorecasrdHitScoreElement.push(ball1box);
-
-	let strikebox = document.createElement('div');
-	strikebox.setAttribute('class', 'strikebox frameScoreFontSize');
-	outerbox.appendChild(strikebox);
-	scorecasrdHitScoreElement.push(strikebox);
-
-	let framescorebox = document.createElement('div');
-	framescorebox.setAttribute('class', 'framescorebox frameScoreFontSize');
-	frameboxbody.appendChild(framescorebox);
-	scorecasrdFrameScoreElement.push(framescorebox);
+	let body = create_frameBody(panel, 'framebox-body', i.toString());
+	let framename = createElement('div', 'framename', null, body);
+	addTextElementText(framename, i + 1);
+	let outerbox = createElement('div', 'outerbox', null, body);
+	let ball1box = createElement('div', 'ballbox', null, outerbox);
+	addTextElement(ball1box, scorecasrdHitScoreElement[selectGameIndex]);
+	let strikebox = createElement('div', 'strikebox', null, outerbox);
+	addTextElement(strikebox, scorecasrdHitScoreElement[selectGameIndex]);
+	let framescorebox = createElement('div', 'framescorebox', null, body);
+	addTextElement(framescorebox, scorecasrdFrameScoreElement[selectGameIndex]);
 }
 
 function onclick_framebody(event) {
-	if (!isNaN(event.target.parentElement.value)) {
-		let index = Number(event.target.parentElement.value);
+	if (!isEmpty(event.currentTarget.value)) {
+		let words = event.currentTarget.value.split('_');
+		let gameIndex = Number(words[0]);
+		let frameIndex = Number(words[1]);
 		if (isCreating) {
-			alert('지금은 다른 프레임을 선택할 수 없습니다.');
+			alert('작성중인 프레임을 완료해 주십시오.');
 		} else {
-			if (index * 2 > scores.length) {
+			if (frameIndex * 2 > scorecasrdFrameScore[gameIndex].length) {
 				alert('이전 프레임을 작성해 주세요.');
 			} else {
-				btn_frames[selectFrameIndex].setAttribute('id', '');
-				selectFrameIndex = index;
-				btn_frames[selectFrameIndex].setAttribute('id', 'selected');
+				try {
+					btn_frames[selectGameIndex][selectFrameIndex].setAttribute('id', '');
+				} catch {}	
+				selectGameIndex = gameIndex;
+				selectFrameIndex = frameIndex;
+				btn_frames[gameIndex][frameIndex].setAttribute('id', 'selected');
 			}
 		}
 	}
+}
+
+function onclick_scorehit(event) {
+	let index = Number(event.target.value);
+	let scores = scorecasrdFrameScore[selectGameIndex];
+	let figure = 0;
+	if (selectFrameIndex > 8) {
+		figure = 18 + (selectFrameIndex - 9);
+		if (figure == scores.length) {
+			scores.push(index);
+		} else {
+			scores[figure] = index;
+			if (figure == 18) {
+				scorecasrdHitScoreElement[selectGameIndex][19].innerHTML = '';
+				scorecasrdHitScoreElement[selectGameIndex][20].innerHTML = '';
+				scores[19] = 0;
+				scores[20] = 0;
+			}
+		}
+		// lastframe
+		isCreating = true;
+		if (index == 10) {
+			scorecasrdHitScoreElement[selectGameIndex][figure].innerHTML = 'X';
+		} else {
+			scorecasrdHitScoreElement[selectGameIndex][figure].innerHTML = index.toString();
+		}
+		selectFrameIndex += 1;
+		// alert("si:" + selectFrameIndex + " sc18:" + scores[18] + " sc19:" + scores[19])
+		if (selectFrameIndex == 10 && scores[18] != 10) {
+			for (let ii = 11 - index; ii < 11; ii++) {
+				hits[ii].style.display = 'none';
+			}
+		} else if (selectFrameIndex == 11 && scores[18] + scores[19] == 10) {
+			scorecasrdHitScoreElement[selectGameIndex][figure].innerHTML = '/';
+			for (let ii = 0; ii < 11; ii++) {
+				hits[ii].style.display = 'inline';
+			}
+		} else if (selectFrameIndex == 11 && scores[18] == 10 && index != 10) {
+			for (let ii = 11 - index; ii < 11; ii++) {
+				hits[ii].style.display = 'none';
+			}
+		} else if (
+			(selectFrameIndex == 11 && scores[18] + scores[19] < 10) ||
+			selectFrameIndex == 12
+		) {
+			if (scores[19] != 10 && index != 10 && scores[19] + index == 10)
+				scorecasrdHitScoreElement[selectGameIndex][figure].innerHTML = '/';
+			isCreating = false;
+			for (let ii = 0; ii < 11; ii++) {
+				hits[ii].style.display = 'inline';
+			}
+			btn_frames[selectGameIndex][9].setAttribute('id', '');
+			selectFrameIndex = 0;
+			btn_frames[selectGameIndex][selectFrameIndex].setAttribute('id', 'selected');
+		}
+	} else {
+		figure = selectFrameIndex * 2;
+		if (!isCreating) {
+			if (figure == scores.length) {
+				scores.push(index);
+			} else {
+				scorecasrdHitScoreElement[selectGameIndex][figure].innerHTML = '';
+				scorecasrdHitScoreElement[selectGameIndex][figure + 1].innerHTML = '';
+				scores[figure] = index;
+				scores[figure + 1] = 0;
+			}
+			// 초구
+			if (index == 10) {
+				figure += 1;
+				if (figure == scores.length) {
+					scores.push(0);
+				}
+				// strike
+				scorecasrdHitScoreElement[selectGameIndex][figure].innerHTML = 'X';
+				btn_frames[selectGameIndex][selectFrameIndex].setAttribute('id', '');
+				selectFrameIndex += 1;
+				isCreating = false;
+			} else {
+				scorecasrdHitScoreElement[selectGameIndex][figure].innerHTML = index.toString();
+				scorecasrdHitScoreElement[selectGameIndex][figure + 1].innerHTML = '';
+				isCreating = true;
+				for (let ii = 11 - index; ii < 11; ii++) {
+					hits[ii].style.display = 'none';
+				}
+			}
+		} else {
+			// 두 번째 샷
+			figure += 1;
+			if (figure == scores.length) {
+				scores.push(index);
+			} else {
+				scores[figure] = index;
+			}
+			if (index + scores[figure - 1] == 10) {
+				scorecasrdHitScoreElement[selectGameIndex][figure].innerHTML = '/';
+			} else {
+				scorecasrdHitScoreElement[selectGameIndex][figure].innerHTML = index.toString();
+			}
+			isCreating = false;
+			btn_frames[selectGameIndex][selectFrameIndex].setAttribute('id', '');
+			selectFrameIndex += 1;
+			for (let ii = 0; ii < 11; ii++) {
+				hits[ii].style.display = 'inline';
+			}
+		}
+		btn_frames[selectGameIndex][selectFrameIndex].setAttribute('id', 'selected');
+	}
+	let newscore = sum_score(scores, true);
+	if (scores.length < 21) {
+		let minscore = scores.slice();
+		for (let i = minscore.length; i < 21; i++) {
+			minscore.push(0);
+		}
+		scorecasrdFrameScoreElement[selectGameIndex][10].innerHTML = sum_score(minscore);
+	} else {
+		scorecasrdFrameScoreElement[selectGameIndex][10].innerHTML = newscore;
+	}
+
+	if (scores.length < 21) {
+		let maxscore = scores.slice();
+		if (i => 18 && maxscore.length % 2 == 1) {
+			maxscore.push(10 - maxscore[maxscore.length - 1]);
+		}
+		for (let i = maxscore.length; i < 21; i++) {
+			if (i >= 18 || (i < 18 && i % 2 == 0)) {
+				maxscore.push(10);
+			} else {
+				maxscore.push(0);
+			}
+		}
+		scorecasrdFrameScoreElement[selectGameIndex][11].innerHTML = sum_score(maxscore);
+	} else {
+		if (figure < 18) {
+			if (figure % 2 == 0) {
+				let maxscore = scores.slice();
+				maxscore[figure + 1] = 10 - maxscore[figure];
+				newscore = sum_score(maxscore);
+			}
+		} else if (figure == 18) {
+			let maxscore = scores.slice();
+			maxscore[19] = 10 - maxscore[18];
+			maxscore[20] = 10;
+			newscore = sum_score(maxscore);
+		} else if (figure == 19) {
+			let maxscore = scores.slice();
+			if (maxscore[18] + maxscore[19] >= 10) {
+				if (maxscore[19] != 10) {
+					maxscore[20] = 10 - maxscore[19];
+				} else {
+					maxscore[20] = 10;
+				}
+			} else {
+				maxscore[20] = 0;
+			}
+			newscore = sum_score(maxscore);
+		}
+		scorecasrdFrameScoreElement[selectGameIndex][11].innerHTML = newscore;
+	}
+}
+
+function create_frameBody(parentElement, classValue, value, type = 'button') {
+	let body = createElement(type, classValue, selectGameIndex + '_'+ value);
+	body.addEventListener('click', onclick_framebody);
+	btn_frames[selectGameIndex].push(body);
+	parentElement.appendChild(body);
+	let framename = createElement('div', 'framename');
+	body.appendChild(framename);
+	return body;
+}
+
+function createElement(type, classValue, value = null, parentElement = null) {
+	let e = document.createElement(type);
+	e.setAttribute('class', classValue);
+	if (value != null) {
+		e.setAttribute('value', value);
+	}
+	if (parentElement != null) {
+		parentElement.appendChild(e);
+	}
+	return e;
+}
+
+function addTextElement(parentElement, pushTarget = null, classname = 'frameScoreFontSize') {
+	let e = createElement('p', classname);
+	parentElement.appendChild(e);
+	if (pushTarget != null) pushTarget.push(e);
+}
+
+function addTextElementText(parentElement, text) {
+	let e = createElement('p', 'frameScoreFontSize');
+	parentElement.appendChild(e);
+	e.innerHTML = text;
 }
 
 function create_buttons() {
@@ -165,124 +338,17 @@ function create_buttons() {
 		let new_element = document.createElement('button');
 		new_element.setAttribute('class', 'btn btn-primary hitbutton');
 		new_element.setAttribute('value', i.toString());
-		new_element.addEventListener('click', function (event) {
-			let index = Number(event.target.value);
-			let figure = 0;
-
-			if (selectFrameIndex > 8) {
-				figure = 18 + (selectFrameIndex - 9);
-				if (figure == scores.length) {
-					scores.push(index);
-				} else {
-					scores[figure] = index;
-				}
-				// lastframe
-				isCreating = true;
-				if (index == 10) {
-					scorecasrdHitScoreElement[figure].innerHTML = 'X';
-				} else {
-					scorecasrdHitScoreElement[figure].innerHTML = index.toString();
-				}
-				selectFrameIndex += 1;
-				// alert("si:" + selectFrameIndex + " sc18:" + scores[18] + " sc19:" + scores[19])
-				if (selectFrameIndex == 10 && scores[18] != 10) {
-					for (let ii = 11 - index; ii < 11; ii++) {
-						hits[ii].style.display = 'none';
-					}
-				} else if (selectFrameIndex == 11 && scores[18] + scores[19] == 10) {
-					scorecasrdHitScoreElement[figure].innerHTML = '/';
-					for (let ii = 0; ii < 11; ii++) {
-						hits[ii].style.display = 'inline';
-					}
-				} else if (selectFrameIndex == 11 && scores[18] == 10 && index != 10) {
-					for (let ii = 11 - index; ii < 11; ii++) {
-						hits[ii].style.display = 'none';
-					}
-				} else if (
-					(selectFrameIndex == 11 && scores[18] + scores[19] < 10) ||
-					selectFrameIndex == 12
-				) {
-					if (scores[19] != 10 && index != 10 && scores[19] + index == 10)
-						scorecasrdHitScoreElement[figure].innerHTML = '/';
-					isCreating = false;
-					for (let ii = 0; ii < 11; ii++) {
-						hits[ii].style.display = 'inline';
-					}
-					btn_frames[9].setAttribute('id', '');
-					selectFrameIndex = 0;
-					btn_frames[selectFrameIndex].setAttribute('id', 'selected');
-				}
-			} else {
-				figure = selectFrameIndex * 2;
-				// alert(figure + ' ' + scores.length);
-				if (!isCreating) {
-					if (figure == scores.length) {
-						scores.push(index);
-					} else {
-						scores[figure] = index;
-					}
-					//alert(figure + " " + scores.length);
-					// 초구
-					if (index == 10) {
-						figure += 1;
-						// alert(figure + ' ' + scores.length);
-						if (figure == scores.length) {
-							scores.push(0);
-						}
-						// strike
-						scorecasrdHitScoreElement[figure].innerHTML = 'X';
-						// scores[selectFrameIndex * 2] = 10;
-						btn_frames[selectFrameIndex].setAttribute('id', '');
-						selectFrameIndex += 1;
-						isCreating = false;
-					} else {
-						// scores[figure] = index;
-						scorecasrdHitScoreElement[figure].innerHTML = index.toString();
-						scorecasrdHitScoreElement[figure + 1].innerHTML = '';
-						isCreating = true;
-						for (let ii = 11 - index; ii < 11; ii++) {
-							hits[ii].style.display = 'none';
-						}
-					}
-					// scores[figure + 1] = 0;
-				} else {
-					// 두 번째 샷
-					figure += 1;
-					if (figure == scores.length) {
-						scores.push(index);
-					} else {
-						scores[figure] = index;
-					}
-					// scores[figure] = index;
-					// alert(index + " " + scores[figure - 1]);
-					if (index + scores[figure - 1] == 10) {
-						scorecasrdHitScoreElement[figure].innerHTML = '/';
-					} else {
-						scorecasrdHitScoreElement[figure].innerHTML = index.toString();
-					}
-					isCreating = false;
-					btn_frames[selectFrameIndex].setAttribute('id', '');
-					selectFrameIndex += 1;
-					for (let ii = 0; ii < 11; ii++) {
-						hits[ii].style.display = 'inline';
-					}
-				}
-				btn_frames[selectFrameIndex].setAttribute('id', 'selected');
-			}
-			// alert('scores:' + scores.join());
-			sum_score(figure, scores);
-		});
+		new_element.addEventListener('click', onclick_scorehit);
 		new_element.innerHTML = i.toString();
 		tagArea.appendChild(new_element);
 		hits.push(new_element);
 	}
 }
 
-function sum_score(figure, list) {
+function sum_score(list, isFrameScoreUpdate = false) {
 	let sum = 0;
-	let max = 300;
 	let framescore = [];
-	for (let i = 0; i < scores.length; i++) {
+	for (let i = 0; i < list.length; i++) {
 		sum += list[i];
 		if (i < 18) {
 			if (i % 2 == 1) {
@@ -292,66 +358,85 @@ function sum_score(figure, list) {
 					if (list[i] + list[i - 1] != 10) {
 						// 현재 프레임이 스페어처리가 아닌경우
 						if (i > 2 && list[i - 3] == 10) {
-							framescore.push(sum);
+							if (isFrameScoreUpdate) framescore.push(sum);
 							sum += list[i] + list[i - 1];
 						}
-						framescore.push(sum);
+						if (isFrameScoreUpdate) {
+							framescore.push(sum);
+						}
 					} else if (i > 1 && list[i - 3] == 10) {
 						// 현재 프레임을 스페어 처리 했을 경우
-						framescore.push(sum);
+						if (isFrameScoreUpdate) framescore.push(sum);
 						sum += list[i] + list[i - 1];
 					}
 				}
 			} else {
 				// first hit
 				if (i > 1) {
-					// alert(i + " " + list[i - 4] + " " + list[i - 2] + " " + list.join());
 					if (i > 3 && list[i - 4] == 10 && list[i - 2] == 10) {
-						// 더블 중
-						// alert('더블 중')
-						framescore.push(sum);
+						if (isFrameScoreUpdate) framescore.push(sum);
 						sum += 10 + list[i];
 					} else if (list[i - 2] != 10 && list[i - 2] + list[i - 1] == 10) {
 						// 전 프레임이 스페어 중일 경우
-						framescore.push(sum);
+						if (isFrameScoreUpdate) framescore.push(sum);
 						sum += list[i];
 					}
-					//if (list[i] == 10) { //현재 프레임이 스트라이크이 경우
-					// if (i > 2 && list[i - 3] + list[i - 2] == 10) { // 전 프레임이 스트라이크 중일 경우
-					// 	framescore.push(sum);
-					// 	sum += list[i] + list[i - 1];
-					// }
-					// framescore.push(sum);
-					//}
 				}
 			}
 		} else {
-			if (i == 18 && list[14] == 10 && list[16] == 10) {
-				// 더블 중
-				framescore.push(sum);
-				sum += 10 + list[i];
-			} else if (i == 19 && list[16] == 10) {
-				// 스트라이크 중
-				framescore.push(sum);
-				sum += list[i] + list[i - 1];
-			} else if (i == 20) {
-				framescore.push(sum);
-			} else if (i == 18 && list[16] + list[17] == 10) {
-				// 스페어 중
-				framescore.push(sum);
-			}
-			if (i == 19 && list[18] + list[19] < 10) {
-				framescore.push(sum);
+			if (i == 18) {
+				if (list[14] == 10 && list[16] == 10) {
+					// 더블 중
+					if (isFrameScoreUpdate) framescore.push(sum);
+					sum += 10 + list[i];
+				} else if (list[16] != 10 && list[16] + list[17] == 10) {
+					// 스페어 중
+					if (isFrameScoreUpdate) framescore.push(sum);
+					sum += list[i];
+				} else if (list[16] == 10 && list[i] != 10) {
+				}
+			} else if (i == 19) {
+				if (list[16] == 10 && list[17] != 10) {
+					// 스트라이크 중
+					if (isFrameScoreUpdate) framescore.push(sum);
+					sum += list[i] + list[i - 1];
+				}
+				if (list[18] + list[19] < 10) {
+					if (isFrameScoreUpdate) framescore.push(sum);
+				}
+			} else {
+				if (isFrameScoreUpdate) framescore.push(sum);
 			}
 		}
 	}
-	//alert('selectFrameIndex:' + selectFrameIndex +  ' sum:' + sum + ' list:' + list.join() + ' fs:' + framescore.join());
-	for (let i = 0; i < 10; i++) {
-		scorecasrdFrameScoreElement[i].innerHTML = '';
+	if (isFrameScoreUpdate) {
+		for (let i = 0; i < 10; i++) {
+			scorecasrdFrameScoreElement[selectGameIndex][i].innerHTML = '';
+		}
+		for (let i = 0; i < framescore.length; i++) {
+			scorecasrdFrameScoreElement[selectGameIndex][i].innerHTML = framescore[i].toString();
+		}
 	}
-	for (let i = 0; i < framescore.length; i++) {
-		scorecasrdFrameScoreElement[i].innerHTML = framescore[i].toString();
+	return sum;
+}
+
+function isEmpty(value) {
+	if (
+		value == '' ||
+		value == null ||
+		value == undefined ||
+		(value != null && typeof value == 'object' && !Object.keys(value).length)
+	) {
+		return true;
+	} else {
+		return false;
 	}
-	scorecasrdFrameScoreElement[10].innerHTML = sum;
-	// alert('sum:' + sum + ' max' + max + " " + list.join() + " fs:" + framescore.join());
+}
+
+function create2DArray(rows, columns) {
+	var arr = new Array(rows);
+	for (var i = 0; i < rows; i++) {
+		arr[i] = new Array(columns);
+	}
+	return arr;
 }
