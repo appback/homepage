@@ -32,7 +32,6 @@ function onclick_pictureInput(event) {
 
 function input_changed(event) {
 	let index = event.target.id.replace('input_', '');
-	alert(parameters[index]['img']);
 	parameters[index]['img'].src = URL.createObjectURL(event.target.files[0]);
 }
 
