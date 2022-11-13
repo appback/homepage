@@ -129,6 +129,13 @@
 		visibility: hidden;
 	}
 	
+	.hitbutton.hit {
+		margin: 2px;
+		width: 27px;
+		height: 30px;
+		padding: 0;
+	}
+	
 	.scorecard {
 		position: relative;
 		margin: 0;
@@ -154,6 +161,6 @@
 	}
 
 	.text.data {
-		font-size: 0.5rem;
+		font-size: 1rem;
 	}
 }

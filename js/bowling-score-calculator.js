@@ -368,7 +368,7 @@ function create_buttons() {
 
 	for (let i = 0; i < 11; i++) {
 		let new_element = document.createElement('button');
-		new_element.setAttribute('class', 'btn btn-primary hitbutton');
+		new_element.setAttribute('class', 'btn btn-primary hitbutton hit');
 		new_element.setAttribute('value', i.toString());
 		new_element.addEventListener('click', onclick_scorehit);
 		new_element.innerHTML = i.toString();
