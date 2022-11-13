@@ -162,4 +162,8 @@
 	.text.data {
 		font-size: 1rem;
 	}
+	
+	.selected {
+	background : Khaki;
+}
 }
