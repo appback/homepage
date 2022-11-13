@@ -21,7 +21,7 @@ window.onload = function () {
 };
 
 function addScoreCard() {
-	btn_frames[selectGameIndex][selectFrameIndex].setAttribute('id', '');
+	btn_frames[selectGameIndex][selectFrameIndex].setAttribute('class', selectFrameIndex == 9 ? 'framebox last' : 'framebox');
 	create_scorecard();
 }
 
@@ -59,83 +59,82 @@ function create_scorecard() {
 		parameters.push({});
 		let tagArea = document.getElementById('tagArea');
 		let scorecard = document.createElement('div');
-		scorecard.setAttribute('class', 'scorecard');
+		scorecard.setAttribute('class', 'scorecard  d-flex justify-content-center');
 		tagArea.appendChild(scorecard);
 		scorecards.push(scorecard);
-		let panel = document.createElement('div');
-		panel.setAttribute('class', 'panel-body');
-		scorecard.appendChild(panel);
 		btn_frames.push(new Array(0));
 		scorecasrdFrameScore.push(new Array(0));
 		scorecasrdFrameScoreElement.push(new Array(0));
 		scorecasrdHitScoreElement.push(new Array(0));
 
-		let value = 'input_' + selectGameIndex;
-		let body = createElement('button', 'framebox-body');
-		body.setAttribute('value', value);
-		body.addEventListener('click', onclick_pictureInput);
-		panel.appendChild(body);
-		let outerbox = createElement('div', 'outerbox', null, body);
-		let inputElement = create_input(value, 'file', 'image/*');
-		inputElement.addEventListener('change', input_changed);
-		outerbox.appendChild(inputElement);
-		let imageElement = document.createElement('img');
-		imageElement.setAttribute('class', 'otherBox');
-		imageElement.setAttribute('src', '');
-		parameters[selectGameIndex]['img'] = imageElement;
-		parameters[selectGameIndex]['input'] = inputElement;
-		body.appendChild(imageElement);
+		// let value = 'input_' + selectGameIndex;
+		// let body = createElement('button', 'framebox-body');
+		// body.setAttribute('value', value);
+		// body.addEventListener('click', onclick_pictureInput);
+		// panel.appendChild(body);
+		// let outerbox = createElement('div', 'outerbox', null, body);
+		// let inputElement = create_input(value, 'file', 'image/*');
+		// inputElement.addEventListener('change', input_changed);
+		// outerbox.appendChild(inputElement);
+		// let imageElement = document.createElement('img');
+		// imageElement.setAttribute('class', 'otherBox');
+		// imageElement.setAttribute('src', '');
+		// parameters[selectGameIndex]['img'] = imageElement;
+		// parameters[selectGameIndex]['input'] = inputElement;
+		// body.appendChild(imageElement);
 
 		for (let i = 0; i < 9; i++) {
-			create_defalutFrame(panel, i);
+			create_defalutFrame(scorecard, i);
 		}
-		create_lastFrame(panel);
-		btn_frames[selectGameIndex][0].setAttribute('id', 'selected');
+		create_lastFrame(scorecard);
+		btn_frames[selectGameIndex][0].setAttribute('class','framebox selected');
 		selectFrameIndex = 0;
 		scorecasrdFrameScoreElement[selectGameIndex][10].innerHTML = 0;
 		scorecasrdFrameScoreElement[selectGameIndex][11].innerHTML = 300;
 	}
 }
 
-function create_lastFrame(panel) {
-	let body = create_buttonframeBody(panel, 'framebox-body last column', '9');
-	let outerbox = createElement('div', 'outerbox', null, body);
-	let strikebox1 = createElement('div', 'strikebox last first', null, outerbox);
-	addTextElement(strikebox1, scorecasrdHitScoreElement[selectGameIndex]);
-	let strikebox2 = createElement('div', 'strikebox last second', null, outerbox);
-	addTextElement(strikebox2, scorecasrdHitScoreElement[selectGameIndex]);
-	let strikebox3 = createElement('div', 'strikebox last', null, outerbox);
-	addTextElement(strikebox3, scorecasrdHitScoreElement[selectGameIndex]);
-	let framescorebox = createElement('div', 'framescorebox', null, body);
-	addTextElement(framescorebox, scorecasrdFrameScoreElement[selectGameIndex]);
+function create_framebase(panel, i, classname = 'framebox') {
+	let body = create_body(panel, classname, (i + 1).toString());
+	body.setAttribute('id', selectGameIndex + '_' + i);
+	body.addEventListener('click', onclick_framebody);
+	btn_frames[selectGameIndex].push(body);
+	let content_body = createElement('div', 'content_body', null, body);
+	return content_body;
+}
 
-	let scorebody = create_frameBody(panel, 'framebox-body', 'Score', 'button');
-	let totalscorebox = createElement('div', 'framescorebox', null, scorebody);
-	addTextElement(
-		totalscorebox,
-		scorecasrdFrameScoreElement[selectGameIndex],
-		'frameScoreFontSize'
-	);
-	let maxscorebody = create_frameBody(panel, 'framebox-body', 'Max Score', 'button');
-	let maxscorebox = createElement('div', 'framescorebox', null, maxscorebody);
-	addTextElement(maxscorebox, scorecasrdFrameScoreElement[selectGameIndex], 'frameScoreFontSize');
+function create_body(parentElement, classname, title) {
+	let e = createElement('div', classname,  null, parentElement);
+	createElement('div', 'framename', null, e, title);
+	return e;
+	
+}
+
+function create_lastFrame(panel) {
+	let content_body = create_framebase(panel, 9, 'framebox last');
+	let outerbox = createElement('div', 'outerbox', null, content_body);
+	createElement_addtextElment(outerbox, 'strikebox last first', scorecasrdHitScoreElement[selectGameIndex]);
+	createElement_addtextElment(outerbox, 'strikebox last second', scorecasrdHitScoreElement[selectGameIndex]);
+	createElement_addtextElment(outerbox, 'strikebox last', scorecasrdHitScoreElement[selectGameIndex]);
+	createElement_addtextElment(content_body, 'framescorebox', scorecasrdFrameScoreElement[selectGameIndex]);
+
+	let scorebody = create_body(panel, 'framebox', 'Score');
+	createElement_addtextElment(scorebody, 'content_body', scorecasrdFrameScoreElement[selectGameIndex]);
+	let totalscorebox = create_body(panel, 'framebox', 'Max Score');
+	createElement_addtextElment(totalscorebox, 'content_body', scorecasrdFrameScoreElement[selectGameIndex]);
 }
 
 function create_defalutFrame(panel, i) {
-	let body = create_buttonframeBody(panel, 'framebox-body column', i.toString());
-	let outerbox = createElement('div', 'outerbox', null, body);
-	let ball1box = createElement('div', 'ballbox', null, outerbox);
-	addTextElement(ball1box, scorecasrdHitScoreElement[selectGameIndex]);
-	let strikebox = createElement('div', 'strikebox', null, outerbox);
-	addTextElement(strikebox, scorecasrdHitScoreElement[selectGameIndex]);
-	let framescorebox = createElement('div', 'framescorebox', null, body);
-	addTextElement(framescorebox, scorecasrdFrameScoreElement[selectGameIndex]);
-	body.style.display = 'inline';
+	let content_body = create_framebase(panel, i)
+	let outerbox = createElement('div', 'outerbox', null, content_body);
+	createElement_addtextElment(outerbox, 'ballbox', scorecasrdHitScoreElement[selectGameIndex]);
+	createElement_addtextElment(outerbox, 'strikebox', scorecasrdHitScoreElement[selectGameIndex]);
+	createElement_addtextElment(content_body, 'framescorebox', scorecasrdFrameScoreElement[selectGameIndex]);
 }
 
 function onclick_framebody(event) {
-	if (!isEmpty(event.currentTarget.value)) {
-		let words = event.currentTarget.value.split('_');
+	if (!isEmpty(event.currentTarget.id)) {
+		let words = event.currentTarget.id.split('_');
 		let gameIndex = Number(words[0]);
 		let frameIndex = Number(words[1]);
 		if (isCreating) {
@@ -145,11 +144,11 @@ function onclick_framebody(event) {
 				alert('이전 프레임을 작성해 주세요.');
 			} else {
 				try {
-					btn_frames[selectGameIndex][selectFrameIndex].setAttribute('id', '');
+					btn_frames[selectGameIndex][selectFrameIndex].setAttribute('class', selectFrameIndex == 9 ? 'framebox last' : 'framebox');
 				} catch {}
 				selectGameIndex = gameIndex;
 				selectFrameIndex = frameIndex;
-				btn_frames[gameIndex][frameIndex].setAttribute('id', 'selected');
+				btn_frames[gameIndex][frameIndex].setAttribute('class', selectFrameIndex == 9 ? 'framebox last' : 'framebox' + ' selected');
 			}
 		}
 	}
@@ -227,7 +226,7 @@ function onclick_scorehit(event) {
 				}
 				// strike
 				scorecasrdHitScoreElement[selectGameIndex][figure].innerHTML = 'X';
-				btn_frames[selectGameIndex][selectFrameIndex].setAttribute('id', '');
+				btn_frames[selectGameIndex][selectFrameIndex].setAttribute('class', 'framebox');
 				selectFrameIndex += 1;
 				isCreating = false;
 			} else {
@@ -252,13 +251,13 @@ function onclick_scorehit(event) {
 				scorecasrdHitScoreElement[selectGameIndex][figure].innerHTML = index.toString();
 			}
 			isCreating = false;
-			btn_frames[selectGameIndex][selectFrameIndex].setAttribute('id', '');
+			btn_frames[selectGameIndex][selectFrameIndex].setAttribute('class', 'framebox');
 			selectFrameIndex += 1;
 			for (let ii = 0; ii < 11; ii++) {
 				hits[ii].style.display = 'inline';
 			}
 		}
-		btn_frames[selectGameIndex][selectFrameIndex].setAttribute('id', 'selected');
+		btn_frames[selectGameIndex][selectFrameIndex].setAttribute('class', selectFrameIndex == 9 ? 'framebox last' : 'framebox' + ' selected');
 	}
 	let newscore = sum_score(scores, true);
 	if (scores.length < 21) {
@@ -313,6 +312,11 @@ function onclick_scorehit(event) {
 	}
 }
 
+function createElement_addtextElment(parentElement, classname, pushTarget) {
+	let e = createElement('div', classname, null, parentElement);
+	addTextElement(e, pushTarget);
+}
+
 function create_input(id, type, accept, ishidden = true) {
 	let e = document.createElement('input');
 	e.setAttribute('id', id);
@@ -324,23 +328,15 @@ function create_input(id, type, accept, ishidden = true) {
 	return e;
 }
 
-function create_buttonframeBody(parentElement, classValue, value) {
-	let e = create_frameBody(parentElement, classValue, Number(value) + 1, 'button');
+function create_button(parentElement, classValue, value) {
+	let e = createElement('button', classValue, null, parentElement);
 	e.setAttribute('value', selectGameIndex + '_' + value);
 	e.addEventListener('click', onclick_framebody);
 	btn_frames[selectGameIndex].push(e);
 	return e;
 }
 
-function create_frameBody(parentElement, classValue, value, type) {
-	let e = createElement(type, classValue, null, parentElement);
-	let framename = createElement('div', 'framename');
-	e.appendChild(framename);
-	addTextElementText(framename, value);
-	return e;
-}
-
-function createElement(type, classValue, value = null, parentElement = null) {
+function createElement(type, classValue, value = null, parentElement = null, text = null, textClass = 'text') {
 	let e = document.createElement(type);
 	e.setAttribute('class', classValue);
 	if (value != null) {
@@ -349,17 +345,20 @@ function createElement(type, classValue, value = null, parentElement = null) {
 	if (parentElement != null) {
 		parentElement.appendChild(e);
 	}
+	if (text != null) {
+		addTextElementText(e, text, textClass);
+	}
 	return e;
 }
 
-function addTextElement(parentElement, pushTarget = null, classname = 'frameScoreFontSize') {
+function addTextElement(parentElement, pushTarget = null, classname = 'text') {
 	let e = createElement('p', classname);
 	parentElement.appendChild(e);
 	if (pushTarget != null) pushTarget.push(e);
 }
 
-function addTextElementText(parentElement, text) {
-	let e = createElement('p', 'frameScoreFontSize');
+function addTextElementText(parentElement, text, classname) {
+	let e = createElement('p', classname);
 	parentElement.appendChild(e);
 	e.innerHTML = text;
 }
