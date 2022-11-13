@@ -351,10 +351,10 @@ function createElement(type, classValue, value = null, parentElement = null, tex
 	return e;
 }
 
-function addTextElement(parentElement, pushTarget = null, classname = 'text') {
-	let e = createElement('p', classname);
+function addTextElement(parentElement, pushTarget) {
+	let e = createElement('p', 'text data');
 	parentElement.appendChild(e);
-	if (pushTarget != null) pushTarget.push(e);
+	pushTarget.push(e);
 }
 
 function addTextElementText(parentElement, text, classname) {
