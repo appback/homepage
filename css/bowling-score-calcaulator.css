@@ -2,7 +2,6 @@
 .wrapper { 
 	margin: 50px 0px 250px 0px;
 	padding: 32px 10px;
-	max-width: 1600px;
 	text-align: center;
 	overflow: auto;
 }
@@ -54,6 +53,11 @@
 	border-bottom : solid thin Black;
 }
 
+.img_body {
+	height: 100%;
+	width: 100%;
+}
+
 .content_body {
 	width: 100%;
 	height: 80%;
@@ -102,10 +106,7 @@
 
 .text {
 	font-size: 0.5rem;
-	text-align: center;
-	width: 100%;
-	height: 100%;
-	margin:0 0 auto;
+	
 }
 
 .text.data {
@@ -157,6 +158,7 @@
 	
 	.text {
 		font-size: 0.3rem;
+		margin:auto;
 	}
 
 	.text.data {

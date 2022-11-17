@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "bowlingscoreo",
+  "private_key_id": "9d401dd2cf0280a881c441652b6f9871ee73ef0d",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQC7fm89oDkF09tZ\n5E4hozvTXmKwqhCgS7URnjYZoDYBACXVaSh4RErw4M0vIKP0jR/G0crqVbxcrlkm\niBZ+SE0Y3FwhqhSjbRB9kJaZSrltRGDcDQh1/4g4jtMxWBgQsr4EUqJqgkqel4kK\nczM4MxsXnKCgp0ZpgxYW0EGAKYyA+Dq0YEgw0NddlQuEo2uDYkageMpufp6Yetm+\nAkkE2v1egfAfzgesWAOzShfxgbCBEODKQGGHZSwigqsiGk43GtD7KT1xRpERQFvM\nvyk3tp2P8a/FAVhFurpiCJ/llPb80TVmvyU2Zj5ijGKk38ovTzRnGN87S99jZybP\nkbo656vTAgMBAAECggEACCerKfiGkmjRERtbhJ4Hc52W2E1FVNuGICKMAthTkP6T\nJrGgt35s7gYxFnwqdXAP8kNcuo2JGFTi/siLhemaJNsszLALnsIXJgb8beVwpD6F\nofyVIiC/qYoYyHwm688CcciwVMae/T/lD4XMNAURCBlhaSttZhh0BQEA4FSuTkuq\nnEpn6D0cO6GCyF3oNkOoF4MtsUkspLrbftPkiz0R3aMKbziERUxlSZjMEqjuE/Pt\nB2lpjzku3mUidCaZzJDHW9JT3aaqH0RVgJEj1I7FO1oYkOh//IKskVN/UY9jPYbG\nOlFQ2SE3H4YHtlPt7r7E8N+Ug7nHcEPJ9ltVz9uvqQKBgQDimYLz0Ull0YBUBETT\nj6y1kjFvuDv3+CVIFmuEjkOou2s067mChSDPg/ircK0HA+67/BKbrSo9dpWakc9v\nmU3QTkJH3UHEFpss18ndiMH71DVh1gJiMN2pR5Ut6Yp5lzn1Kf8dfIscULkzvZRM\ndvpFMIMleynKBehdAJ/5FWQNGwKBgQDT0gc1JtAw8/fC34y/itMJbeacooOtxlLD\nwFdfuxrkIgq8QfXC6dD+Y9k+keTlZtxGLxZ4VdSKwJTuUiPOqRCXL5on6v7wR7SE\nPT3TUmYIxygglGr3P4Ig3WAIlrfWuCswJzyrf0uBj1GoYfYDvncuBYwgSOK1Zoun\nzXsOltpfqQKBgAGXKkAj2+wHCGuOjB0gCQpNOGOcW29mInzbC24mwXrRtfLtJKQx\n4wUR3BD3/X7rHCXdoxPMp1s/FdW76ETUQqOPqQ9wEiIaNoSeDyCq8RGfb7B8HBAs\nX6HsirODzCEGWrXJ0ayXTzKnrmUak4vl2ePab1E4CBcO646bjoPlDoq5AoGBAMRf\n1NrL7vtTUwFRaxUwyNHXF5Njfxyd3qEoMljIB/g0Lyu1Ivje+Ci/vOorK8AZimFu\nyjApsnAodmozsIqpZn4jXZFgZZWxhIOMm0LNA1dj+6morzoloKiDU8Lip/DisPdl\niPOdggzNJ/EpUIDMFYWPEwfjSnrOZO7eqxUteapxAoGASfMqs20bqi8yhxI/5Dvh\n1WtPiCHlQJS/rQEV2NLzlqyKS2aavY9J0j5ei0On5CPOrarrjBqubW2jkaxTZ05X\n2/5M3m1YkiEVSgK3MaMuY4ZVn9HoFDkAaeQ/309O2PLkNywkhbsAK21gZAW7jk26\n3IOiq0nxrH2VeNCrOT/90zk=\n-----END PRIVATE KEY-----\n",
+  "client_email": "bowlingscore@bowlingscoreo.iam.gserviceaccount.com",
+  "client_id": "106212989896550934331",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/bowlingscore%40bowlingscoreo.iam.gserviceaccount.com"
+}

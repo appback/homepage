@@ -21,18 +21,27 @@ window.onload = function () {
 };
 
 function addScoreCard() {
-	btn_frames[selectGameIndex][selectFrameIndex].setAttribute('class', selectFrameIndex == 9 ? 'framebox last' : 'framebox');
+	btn_frames[selectGameIndex][selectFrameIndex].setAttribute(
+		'class',
+		selectFrameIndex == 9 ? 'framebox last' : 'framebox'
+	);
 	create_scorecard();
 }
 
 function onclick_pictureInput(event) {
-	let myInput = document.getElementById(event.currentTarget.value);
+	let index = event.currentTarget.id.replace('btn_', '');
+	let myInput = document.getElementById('input_' + index);
 	myInput.click();
 }
 
 function input_changed(event) {
 	let index = event.target.id.replace('input_', '');
-	parameters[index]['img'].src = URL.createObjectURL(event.target.files[0]);
+	var image = parameters[index]['img'];
+	var image_url = URL.createObjectURL(event.target.files[0]);
+	image.src = image_url;
+	image.onload = function () {
+
+	};
 }
 
 function delScoreCard() {
@@ -67,27 +76,28 @@ function create_scorecard() {
 		scorecasrdFrameScoreElement.push(new Array(0));
 		scorecasrdHitScoreElement.push(new Array(0));
 
-		// let value = 'input_' + selectGameIndex;
-		// let body = createElement('button', 'framebox-body');
-		// body.setAttribute('value', value);
-		// body.addEventListener('click', onclick_pictureInput);
-		// panel.appendChild(body);
-		// let outerbox = createElement('div', 'outerbox', null, body);
-		// let inputElement = create_input(value, 'file', 'image/*');
-		// inputElement.addEventListener('change', input_changed);
-		// outerbox.appendChild(inputElement);
-		// let imageElement = document.createElement('img');
-		// imageElement.setAttribute('class', 'otherBox');
-		// imageElement.setAttribute('src', '');
-		// parameters[selectGameIndex]['img'] = imageElement;
-		// parameters[selectGameIndex]['input'] = inputElement;
-		// body.appendChild(imageElement);
+		let body = createElement('div', 'framebox');
+		body.setAttribute('id', 'btn_' + selectGameIndex);
+		body.addEventListener('click', onclick_pictureInput);
+		scorecard.appendChild(body);
+
+		let imageElement = document.createElement('img');
+		imageElement.setAttribute('class', 'img_body');
+		imageElement.setAttribute('src', 'player.png');
+		parameters[selectGameIndex]['img'] = imageElement;
+		body.appendChild(imageElement);
+
+		let inputElement = create_input('input_' + selectGameIndex, 'file', 'image/*');
+		inputElement.addEventListener('change', input_changed);
+		body.appendChild(inputElement);
+
+		parameters[selectGameIndex]['input'] = inputElement;
 
 		for (let i = 0; i < 9; i++) {
 			create_defalutFrame(scorecard, i);
 		}
 		create_lastFrame(scorecard);
-		btn_frames[selectGameIndex][0].setAttribute('class','framebox selected');
+		btn_frames[selectGameIndex][0].setAttribute('class', 'framebox selected');
 		selectFrameIndex = 0;
 		scorecasrdFrameScoreElement[selectGameIndex][10].innerHTML = 0;
 		scorecasrdFrameScoreElement[selectGameIndex][11].innerHTML = 300;
@@ -104,32 +114,59 @@ function create_framebase(panel, i, classname = 'framebox') {
 }
 
 function create_body(parentElement, classname, title) {
-	let e = createElement('div', classname,  null, parentElement);
+	let e = createElement('div', classname, null, parentElement);
 	createElement('div', 'framename', null, e, title);
 	return e;
-	
 }
 
 function create_lastFrame(panel) {
 	let content_body = create_framebase(panel, 9, 'framebox last');
 	let outerbox = createElement('div', 'outerbox', null, content_body);
-	createElement_addtextElment(outerbox, 'strikebox last first', scorecasrdHitScoreElement[selectGameIndex]);
-	createElement_addtextElment(outerbox, 'strikebox last second', scorecasrdHitScoreElement[selectGameIndex]);
-	createElement_addtextElment(outerbox, 'strikebox last', scorecasrdHitScoreElement[selectGameIndex]);
-	createElement_addtextElment(content_body, 'framescorebox', scorecasrdFrameScoreElement[selectGameIndex]);
+	createElement_addtextElment(
+		outerbox,
+		'strikebox last first',
+		scorecasrdHitScoreElement[selectGameIndex]
+	);
+	createElement_addtextElment(
+		outerbox,
+		'strikebox last second',
+		scorecasrdHitScoreElement[selectGameIndex]
+	);
+	createElement_addtextElment(
+		outerbox,
+		'strikebox last',
+		scorecasrdHitScoreElement[selectGameIndex]
+	);
+	createElement_addtextElment(
+		content_body,
+		'framescorebox',
+		scorecasrdFrameScoreElement[selectGameIndex]
+	);
 
 	let scorebody = create_body(panel, 'framebox', 'Score');
-	createElement_addtextElment(scorebody, 'content_body', scorecasrdFrameScoreElement[selectGameIndex]);
+	createElement_addtextElment(
+		scorebody,
+		'content_body',
+		scorecasrdFrameScoreElement[selectGameIndex]
+	);
 	let totalscorebox = create_body(panel, 'framebox', 'Max Score');
-	createElement_addtextElment(totalscorebox, 'content_body', scorecasrdFrameScoreElement[selectGameIndex]);
+	createElement_addtextElment(
+		totalscorebox,
+		'content_body',
+		scorecasrdFrameScoreElement[selectGameIndex]
+	);
 }
 
 function create_defalutFrame(panel, i) {
-	let content_body = create_framebase(panel, i)
+	let content_body = create_framebase(panel, i);
 	let outerbox = createElement('div', 'outerbox', null, content_body);
 	createElement_addtextElment(outerbox, 'ballbox', scorecasrdHitScoreElement[selectGameIndex]);
 	createElement_addtextElment(outerbox, 'strikebox', scorecasrdHitScoreElement[selectGameIndex]);
-	createElement_addtextElment(content_body, 'framescorebox', scorecasrdFrameScoreElement[selectGameIndex]);
+	createElement_addtextElment(
+		content_body,
+		'framescorebox',
+		scorecasrdFrameScoreElement[selectGameIndex]
+	);
 }
 
 function onclick_framebody(event) {
@@ -144,11 +181,17 @@ function onclick_framebody(event) {
 				alert('이전 프레임을 작성해 주세요.');
 			} else {
 				try {
-					btn_frames[selectGameIndex][selectFrameIndex].setAttribute('class', selectFrameIndex == 9 ? 'framebox last' : 'framebox');
+					btn_frames[selectGameIndex][selectFrameIndex].setAttribute(
+						'class',
+						selectFrameIndex == 9 ? 'framebox last' : 'framebox'
+					);
 				} catch {}
 				selectGameIndex = gameIndex;
 				selectFrameIndex = frameIndex;
-				btn_frames[gameIndex][frameIndex].setAttribute('class', selectFrameIndex == 9 ? 'framebox last' : 'framebox' + ' selected');
+				btn_frames[gameIndex][frameIndex].setAttribute(
+					'class',
+					selectFrameIndex == 9 ? 'framebox last' : 'framebox' + ' selected'
+				);
 			}
 		}
 	}
@@ -257,7 +300,10 @@ function onclick_scorehit(event) {
 				hits[ii].style.display = 'inline';
 			}
 		}
-		btn_frames[selectGameIndex][selectFrameIndex].setAttribute('class', selectFrameIndex == 9 ? 'framebox last' : 'framebox' + ' selected');
+		btn_frames[selectGameIndex][selectFrameIndex].setAttribute(
+			'class',
+			selectFrameIndex == 9 ? 'framebox last' : 'framebox' + ' selected'
+		);
 	}
 	let newscore = sum_score(scores, true);
 	if (scores.length < 21) {
@@ -336,7 +382,14 @@ function create_button(parentElement, classValue, value) {
 	return e;
 }
 
-function createElement(type, classValue, value = null, parentElement = null, text = null, textClass = 'text') {
+function createElement(
+	type,
+	classValue,
+	value = null,
+	parentElement = null,
+	text = null,
+	textClass = 'text'
+) {
 	let e = document.createElement(type);
 	e.setAttribute('class', classValue);
 	if (value != null) {
