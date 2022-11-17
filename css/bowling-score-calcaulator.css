@@ -105,12 +105,12 @@
 }
 
 .text {
-	font-size: 0.5rem;
+	font-size: 1rem;
 	
 }
 
 .text.data {
-	font-size: 1rem;
+	font-size: 1.5rem;
 }
 
 .otherBox {
